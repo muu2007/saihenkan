@@ -15,7 +15,7 @@ function! saihenkan#Saihenkan(offset, skk_jisyo) abort " 再変換:候補を示�
   echo entries
   let c = getchar(0) | while c ==# '\<CursorHold>' | sleep 51m| let c = getchar(0) | endwhile
   if empty(nr2char(c)) |redraw| echo ''| return| endif  " Leftだとc=<80>klでascii=''
-  if 9 == c | redraw| call Saihenkan(a:offset +1, a:skk_jisyo)| return| endif  " TABで次の見出し行へ
+  if 9 == c | redraw| call saihenkan#Saihenkan(a:offset +1, a:skk_jisyo)| return| endif  " TABで次の見出し行へ
   " let @z = system('awk -F: -v RS=" " ''$1=="'.nr2char(c).'"{printf("%s",$2)}'' ', entries) " スペースの有る候補がダメ
   let @z = system('grep -oP "(?<='.nr2char(c).':).*?(?=\s(.:|$))"| tr -d "\n"', entries)  " grepだと前後に改行が付く(bash内では付かない？)
   redraw| echo @z
